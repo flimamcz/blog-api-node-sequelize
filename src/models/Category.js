@@ -13,15 +13,8 @@ const CategoryModel = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
     },
-    { timestamps: false, tableName: 'category' }
+    { timestamps: false, tableName: 'categories' }
   );
-
-  Category.associate = (models) => {
-    BlogPost.hasMany(models.BlogPost, {
-      foreignKey: 'categoryId',
-      as: 'categories',
-    });
-  };
 
   return Category;
 };
