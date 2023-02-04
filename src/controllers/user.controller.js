@@ -1,4 +1,8 @@
-const { createUser, getAllUsers } = require('../services/user.services');
+const {
+  createUser,
+  getAllUsers,
+  getUserById,
+} = require('../services/user.services');
 const errorMap = require('../utils/errorMap');
 
 const user = async (req, res) => {
@@ -26,7 +30,18 @@ const getAllUser = async (req, res) => {
     const { message } = await getAllUsers();
     res.status(200).json(message);
   } catch (error) {
-    console.log(error);
+    return res.status(401).json({ message: error.message });
+  }
+};
+
+const getUserId = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { type, message } = await getUserById(id);
+    if (type) return res.status(errorMap.mapError(type)).json({ message });
+
+    res.status(200).json(message);
+  } catch (error) {
     return res.status(401).json({ message: error.message });
   }
 };
@@ -34,4 +49,5 @@ const getAllUser = async (req, res) => {
 module.exports = {
   getAllUser,
   user,
+  getUserId,
 };
