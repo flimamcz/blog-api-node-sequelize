@@ -1,4 +1,4 @@
-const { createUser } = require('../services/user.services');
+const { createUser, getAllUsers } = require('../services/user.services');
 const errorMap = require('../utils/errorMap');
 
 const user = async (req, res) => {
@@ -21,4 +21,17 @@ const user = async (req, res) => {
   return res.status(201).send({ token: message });
 };
 
-module.exports = user;
+const getAllUser = async (req, res) => {
+  try {
+    const { message } = await getAllUsers();
+    res.status(200).json(message);
+  } catch (error) {
+    console.log(error);
+    return res.status(401).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  getAllUser,
+  user,
+};

@@ -39,6 +39,5 @@ const validationCreateUser = async ({ email, password, displayName }) => {
 module.exports = {
   validationLogin,
   validateExistUser,
-
   validationCreateUser,
 };
