@@ -1,4 +1,4 @@
-const { validateLogin } = require('./schema');
+const { validateLogin, validateUser } = require('./schema');
 const { User } = require('../../models');
 
 const validationLogin = (dataLogin) => {
@@ -24,7 +24,21 @@ const validateExistUser = async (dataLogin) => {
   return { type: null, message: '' };
 };
 
+const validationCreateUser = async ({ email, password, displayName }) => {
+  const { error } = validateUser.validate({ email, password, displayName });
+  if (error) return { type: 'BAD_REQUEST', message: error.message };
+
+  const findUserByEmail = await User.findOne({
+    where: { email },
+  });
+
+  if (findUserByEmail) return { type: 'DUPLICATE', message: 'User already registered' };
+  return { type: null, message: '' };
+};
+
 module.exports = {
   validationLogin,
   validateExistUser,
+
+  validationCreateUser,
 };

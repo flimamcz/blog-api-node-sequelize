@@ -1,5 +1,5 @@
 const { login: isLogin } = require('../services/login.service.js');
-// const errorMap = require('../utils/errorMap');
+const errorMap = require('../utils/errorMap');
 
 const login = async (req, res) => {
   try {
@@ -12,7 +12,7 @@ const login = async (req, res) => {
     }
 
     const { type, message } = await isLogin({ email, password });
-    if (type) return res.status(400).json({ message });
+    if (type) return res.status(errorMap.mapError(type)).json({ message });
 
     res.status(200).json({ token: message });
   } catch (err) {

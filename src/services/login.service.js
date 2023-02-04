@@ -9,7 +9,7 @@ const login = async (dataLogin) => {
   });
 
   if (!findLoginAuthorized) {
-    return { type: 'NOT_FOUND', message: 'Invalid fields' };
+    return { type: 'BAD_REQUEST', message: 'Invalid fields' };
   }
 
   const token = generateToken(email);
@@ -19,4 +19,5 @@ const login = async (dataLogin) => {
 
 module.exports = {
   login,
+
 };
