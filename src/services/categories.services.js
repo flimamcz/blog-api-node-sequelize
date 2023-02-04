@@ -5,4 +5,13 @@ const create = async (newCategory) => {
   return { type: null, message: created };
 };
 
-module.exports = { create };
+const getAll = async () => {
+  const categories = await Category.findAll();
+  if (!categories) {
+    return { type: 'NOT_FOUND', message: 'Categories does not exist' };
+  }
+
+  return { type: null, message: categories };
+};
+
+module.exports = { create, getAll };

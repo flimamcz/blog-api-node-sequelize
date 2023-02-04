@@ -1,4 +1,4 @@
-const { create } = require('../services/categories.services');
+const { create, getAll } = require('../services/categories.services');
 const errorMap = require('../utils/errorMap');
 
 const createCategories = async (req, res) => {
@@ -12,4 +12,13 @@ const createCategories = async (req, res) => {
   }
 };
 
-module.exports = { createCategories };
+const getAllCategories = async (req, res) => {
+  try {
+    const { message } = await getAll();
+    res.status(200).json(message);
+  } catch (error) {
+    return res.status(401).json({ message: error.message });
+  }
+};
+
+module.exports = { createCategories, getAllCategories };
