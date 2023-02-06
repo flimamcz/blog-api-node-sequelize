@@ -1,9 +1,12 @@
 const { PostCategory, User, Category, BlogPost } = require('../models');
 
-const create = async (newBlog) => {
-  const createdPostCategoryId = await PostCategory.create(newBlog);
-  const findCreatedPost = await PostCategory.findByPk(createdPostCategoryId);
-  return { type: null, message: findCreatedPost };
+const create = async (_newBlog) => {
+  // const { title, content, categoryIds } = newBlog;
+  // const post = await BlogPost.create({
+  //   title,
+  //   content,
+  //   usercategoryIds
+  // });
 };
 
 const getAll = async () => {
@@ -18,7 +21,27 @@ const getAll = async () => {
   return { type: null, message: result };
 };
 
+const getById = async (id) => {
+  const post = await BlogPost.findByPk(id, {
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+      {
+        model: Category,
+        as: 'categories',
+      },
+    ],
+  });
+  if (!post) return { type: 'NOT_FOUND', message: 'Post does not exist' };
+
+  return { type: null, message: post };
+};
+
 module.exports = {
   getAll,
   create,
+  getById,
 };
