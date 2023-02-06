@@ -1,4 +1,5 @@
 const { getAll, create, getById } = require('../services/post.services');
+const errorMap = require('../utils/errorMap');
 
 const createPost = async (req, res) => {
   const { title, content, categoryIds } = req.body;
@@ -24,7 +25,7 @@ const getPostById = async (req, res) => {
   try {
     const { type, message } = await getById(id);
 
-    if (type) return res.status(404).json({ message });
+    if (type) return res.status(errorMap.mapError(type)).json({ message });
     res.status(200).json(message);
   } catch (error) {
     return res.status(401).json({ message: error.message });
