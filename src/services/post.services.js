@@ -1,13 +1,4 @@
-const { PostCategory, User, Category, BlogPost } = require('../models');
-
-const create = async (_newBlog) => {
-  // const { title, content, categoryIds } = newBlog;
-  // const post = await BlogPost.create({
-  //   title,
-  //   content,
-  //   usercategoryIds
-  // });
-};
+const { User, Category, BlogPost } = require('../models');
 
 const getAll = async () => {
   const result = await BlogPost.findAll({
@@ -42,6 +33,5 @@ const getById = async (id) => {
 
 module.exports = {
   getAll,
-  create,
   getById,
 };
